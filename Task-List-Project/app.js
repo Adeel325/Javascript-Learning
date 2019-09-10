@@ -13,6 +13,7 @@ loadEventListeners();
 
 // Load all event listeners
 function loadEventListeners() {
+  
   // Add task event
   form.addEventListener('submit', addTask);
   // Remove task event
@@ -46,12 +47,26 @@ function addTask(e) {
     
     // Append li to ul
     taskList.appendChild(li);
-    
+    // Store task in LS
+    storeTaskInLocalStorage(taskInput.value);
     // Clear input
     taskInput.value = '';
     
   }
   e.preventDefault();
+}
+// Add task to LS
+function storeTaskInLocalStorage(task){
+  let tasks;
+  if(localStorage.getItem('tasks') === null){
+    tasks = [];
+  }
+  else{
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
+  tasks.push(task);
+  
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 //Remove task
 function  removeTask(e){
